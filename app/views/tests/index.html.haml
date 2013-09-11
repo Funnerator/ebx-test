@@ -1,0 +1,9 @@
+%h3 tests
+
+%ul
+  - @tests.each do |test|
+    %li
+      = test.name
+
+= form_for Test.new do |f|
+  %button{type: 'submit'} Create New
