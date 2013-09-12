@@ -1,6 +1,5 @@
 class TestsController < ApplicationController
   def index
-    binding.pry
     @tests = Test.all
   end
 

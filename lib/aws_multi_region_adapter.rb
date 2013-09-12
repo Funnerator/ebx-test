@@ -30,7 +30,7 @@ module Dynamoid
       # dynamo_db_endpoint : dynamodb.ap-southeast-1.amazonaws.com)
       # @since 0.2.0
       def connect!
-        @@connection = AWS::DynamoDB.new
+        @@connection = AwsSnsWriter.new
       end
 
       # Return the established connection.
@@ -54,18 +54,26 @@ module Dynamoid
       #
       # @since 0.2.0
       def batch_get_item(table_ids, options = {})
-        hash = Hash.new{|h, k| h[k] = []}
-        return hash if table_ids.all?{|k, v| v.empty?}
-        table_ids.each do |t, ids|
-          Array(ids).in_groups_of(100, false) do |group|
-            batch = AWS::DynamoDB::BatchGet.new(:config => @@connection.config)
-            batch.table(t, :all, Array(group), options) unless group.nil? || group.empty?
-            batch.each do |table_name, attributes|
-              hash[table_name] << attributes.symbolize_keys!
-            end
+        binding.pry
+        connection.batch_get do |batch|
+          table_ids.each do |table, keys|
+            batch.table(table, :all, keys)
           end
         end
-        hash
+
+
+
+        #return hash if table_ids.all?{|k, v| v.empty?}
+        #table_ids.each do |t, ids|
+        #  Array(ids).in_groups_of(100, false) do |group|
+        #    batch = AWS::DynamoDB::BatchGet.new(:config => @@connection.config)
+        #    batch.table(t, :all, Array(group), options) unless group.nil? || group.empty?
+        #    batch.each do |table_name, attributes|
+        #      hash[table_name] << attributes.symbolize_keys!
+        #    end
+        #  end
+        #end
+        #hash
       end
 
       # Delete many items at once from DynamoDB. More efficient than delete each item individually.
@@ -174,7 +182,7 @@ module Dynamoid
       #
       # @since 0.2.0
       def list_tables
-        @@connection.tables.collect(&:name)
+        connection.db.tables.collect(&:name)
       end
 
       # Persists an item on DynamoDB.
@@ -184,13 +192,7 @@ module Dynamoid
       #
       # @since 0.2.0
       def put_item(table_name, object, options = nil)
-        table = get_table(table_name)
-        table.items.create(
-          object.delete_if{|k, v| v.nil? || (v.respond_to?(:empty?) && v.empty?)},
-          options || {}
-        )
-      rescue AWS::DynamoDB::Errors::ConditionalCheckFailedException => e
-        raise Dynamoid::Errors::ConditionalCheckFailedException        
+        connection.put_item(table_name, object, options)
       end
 
       # Query the DynamoDB table. This employs DynamoDB's indexes so is generally faster than scanning, but is
@@ -252,7 +254,7 @@ module Dynamoid
 
       def get_table(table_name)
         unless table = table_cache[table_name]
-          table = @@connection.tables[table_name]
+          table = @@connection.db.tables[table_name]
           table.load_schema
           table_cache[table_name] = table
         end

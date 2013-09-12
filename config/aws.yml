@@ -1,7 +1,7 @@
 aws: &aws
   access_key_id: 'AKIAIZGLLSJXZOOR5KSQ'
   secret_access_key: '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'
-  dynamo_db_endpoint: 'dynamodb.us-east-1.amazonaws.com'
+  #dynamo_db_endpoint: 'dynamodb.us-east-1.amazonaws.com'
 
 local: &local
   access_key_id: 'xxx'

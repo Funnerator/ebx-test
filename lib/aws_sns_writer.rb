@@ -1,60 +1,66 @@
 class AwsSnsWriter
-  def connect!
+  attr_accessor :db
+
+  def initialize
     dg = Ebx::DeployGroup.new
     @topic = dg.notification_service
 
     @db = AWS::DynamoDB.new
   end
 
-  # FORMAT
-  # { request_items: {keys: [], [attributes_to_get: []], consistent_read:
-  # <Bool>}, return_consumed_capacity: <TOTAL | NONE>
-  def batch_get_item(options)
-    @db.client.batch_get_item(options)
+  def batch_get_item(&block)
+    @db.batch_get_item(&block)
+  end
+
+  def batch_write_item(options)
+    @db.client.batch_write_item(options)
+    @topic.publish({
+      method: 'batch_write_item',
+      args: [options]
+    }.to_json)
   end
 
   def batch_delete_item(options)
     @topic.publish({
       method: 'batch_delete_item',
-      args: [table_name, key, options]
+      args: [options]
     }.to_json)
   end
 
-  def create_table(table_name, key = :id, options = {})
+  def create_table(options = {})
     @topic.publish({
       method: 'create_table',
-      args: [key, options]
+      args: [options]
     }.to_json)
   end
 
-  def delete_item(table_name, key, options={})
+  def delete_item(options = {})
     @topic.publish({
       method: 'delete_item',
-      args: [key, options]
+      args: [options]
     }.to_json)
   end
 
-  def delete_table(table_name)
+  def delete_table(options = {})
     @topic.publish({
       method: 'delete_table',
       args: [table_name]
     }.to_json)
   end
 
-  def get_item(table_name, key, options = {})
+  def describe_table(options = {})
+    @db.client.describe_table(options)
   end
 
-  def update_item(table_name, key, options = {})
-    @topic.publish({
-      method: 'update_item',
-      args: [table_name, key, options]
-    }.to_json)
+  def get_item(table_name, key, options = {})
+    @db.client.get_item(options)
   end
 
   def list_tables
+    @db.client.list_tables(options)
   end
 
-  def put_item(table_name, object, options = {})
+  def put_item(table_name, object, options = nil)
     @topic.publish({
       method: 'put_item',
       args: [table_name, object, options]
@@ -62,15 +68,25 @@ class AwsSnsWriter
   end
 
   def query(table_name, opts = {})
+    @db.client.query(options)
   end
 
-  def scan(table_name, scan_hash, select_opts)
+  def scan(options)
+    @db.client.scan(options)
   end
 
-  def get_table(table_name)
+  def update_item(options = {})
+    @topic.publish({
+      method: 'update_item',
+      args: [options]
+    }.to_json)
   end
 
-  def count(table_name)
+  def update_table(options = {})
+    @topic.publish({
+      method: 'update_item',
+      args: [options]
+    }.to_json)
   end
 
   def self.send_test
