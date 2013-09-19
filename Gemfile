@@ -7,7 +7,7 @@ gem 'haml'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 group :development do
-  gem 'ebx', path: '/Users/alex/Programming/ruby/ebx'
+  gem 'ebx'#, path: '/Users/alex/Programming/ruby/ebx'
 end
 
 # Gems used only for assets and not required
