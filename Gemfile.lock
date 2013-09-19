@@ -1,5 +1,6 @@
-PATH
-  remote: /Users/alex/Programming/ruby/ebx
+GIT
+  remote: https://github.com/Funnerator/ebx.git
+  revision: fb75a38da4d44d6ad657a5efe274d98d12d8f27b
   specs:
     ebx (0.0.2)
       aws-sdk (~> 1.17.0)
