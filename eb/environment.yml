@@ -1,19 +1,32 @@
+---
 base: &base
-  name: 'test_app'
+  name: 'test_app_2'
   description: 'test desc'
+  app_id: '1234sdlfk'
   solution_stack: '64bit Amazon Linux running Ruby 1.9.3'
-  environments:
-    - region: 'us-west-2'
-    - region: 'us-east-1'
 
-production:
-  <<: *base
+  options:
+    aws:autoscaling:launchconfiguration:
+      EC2KeyName: 'id_rsa'
 
-test:
-  <<: *base
+  regions:
+    us-west-2:
+      options:
+        aws:elasticbeanstalk:application:environment:
+          PARAM1: 'a value'
+      
+    us-east-1:
 
-staging:
-  <<: *base
+environments:
+  production:
+    <<: *base
+    name: 'test_app_prod'
 
-development:
-  <<: *base
+  test:
+    <<: *base
+
+  staging:
+    <<: *base
+
+  development:
+    <<: *base
