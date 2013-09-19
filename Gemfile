@@ -1,12 +1,14 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.12'
+gem 'rake', '0.9.2.2'
 gem 'haml'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 group :development do
+  #gem 'ebx', path: '/Users/alex/Programming/ruby/ebx'
   gem 'ebx', git: 'https://github.com/Funnerator/ebx.git'
 end
 
