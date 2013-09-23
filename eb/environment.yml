@@ -5,11 +5,13 @@ base: &base
   app_id: '1234sdlfk'
   solution_stack: '64bit Amazon Linux running Ruby 1.9.3'
 
-  options:
+  options: &default_options
     aws:autoscaling:launchconfiguration:
       EC2KeyName: 'id_rsa'
+    aws:elasticbeanstalk:application:environment:
+      PARAM1: 'not a value'
 
-  regions:
+  regions: &default_regions
     us-west-2:
       options:
         aws:elasticbeanstalk:application:environment:
@@ -20,13 +22,26 @@ base: &base
 environments:
   production:
     <<: *base
-    name: 'test_app_prod'
+    name: 
+      blah: 'development_app'
+    regions:
+      <<: *default_regions
+      us-west-1:
 
   test:
     <<: *base
 
   staging:
     <<: *base
+    name: 
+      boo: 'sdf'
 
   development:
     <<: *base
+    name: 
+      blah: 'development_app'
+    options:
+      <<: *default_options
+      aws:elasticbeanstalk:application:environment:
+        PARAM1: 'not a value'
+        RAILS_ENV: 'development'
