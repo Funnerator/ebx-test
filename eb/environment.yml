@@ -44,4 +44,4 @@ environments:
       <<: *default_options
       aws:elasticbeanstalk:application:environment:
         PARAM1: 'not a value'
-        RAILS_ENV: 'development'
+        RAILS_ENV: 'developments'
