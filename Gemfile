@@ -1,15 +1,17 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.12'
-gem 'rake', '0.9.2.2'
+
+# Seems to be required for console on Fedora
+gem 'minitest', '~> 4.7', :require => 'minitest/unit'
 gem 'haml'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 group :development do
-  # gem 'ebx', path: '/Users/alex/Programming/ruby/ebx'
-  gem 'ebx', git: 'https://github.com/Funnerator/ebx.git'
+  gem 'ebx', path: '/Users/alex/Programming/ruby/ebx'
+ # gem 'ebx', git: 'https://github.com/Funnerator/ebx.git'
 end
 
 # Gems used only for assets and not required
