@@ -9,10 +9,7 @@ gem 'haml'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-group :development do
-  gem 'ebx', path: '/Users/alex/Programming/ruby/ebx'
- # gem 'ebx', git: 'https://github.com/Funnerator/ebx.git'
-end
+gem 'ebx_deliver'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -42,6 +39,3 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'debugger'
-
-gem 'aws-sdk'
-gem 'dynamoid'
