@@ -19,7 +19,7 @@ test:
 # NOT SET UP!
 
 production:
-  <<: *local
+  <<: *aws
 
 sandbox:
   <<: *local
