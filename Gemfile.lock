@@ -1,3 +1,12 @@
+PATH
+  remote: /Users/alex/Programming/ruby/ebx_deliver
+  specs:
+    ebx_deliver (0.0.1)
+      aws-sdk (~> 1.17.0)
+      daemons (~> 1.1.9)
+      dynamoid (~> 0.7.1)
+      pry (> 0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -42,16 +51,14 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    daemons (1.1.9)
     dynamoid (0.7.1)
       activemodel
       aws-sdk
       tzinfo
-    ebx_deliver (0.0.1)
-      aws-sdk (~> 1.17.0)
-      dynamoid (~> 0.7.1)
-      pry (> 0)
     erubis (2.7.0)
     execjs (2.0.1)
+    ffi (1.9.0-java)
     haml (4.0.3)
       tilt
     hike (1.2.3)
@@ -71,11 +78,17 @@ GEM
     minitest (4.7.5)
     multi_json (1.8.0)
     nokogiri (1.5.10)
+    nokogiri (1.5.10-java)
     polyglot (0.3.3)
     pry (0.9.12.2)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
+    pry (0.9.12.2-java)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.4)
+      spoon (~> 0.0)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -107,6 +120,8 @@ GEM
       sass (>= 3.1.10)
       tilt (~> 1.3)
     slop (3.4.6)
+    spoon (0.0.4)
+      ffi
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -129,7 +144,7 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 3.2.1)
-  ebx_deliver
+  ebx_deliver!
   haml
   jquery-rails
   minitest (~> 4.7)
