@@ -4,6 +4,8 @@ options: &default_options
     EC2KeyName: id_rsa
   aws:elasticbeanstalk:application:environment:
     PARAM1: a value
+database: &default_db
+  adapter: dynamo_db
 attrs: &default_attrs
   name: test_app_2
   description: test desc
@@ -11,6 +13,7 @@ attrs: &default_attrs
   solution_stack: 64bit Amazon Linux running Ruby 1.9.3
   domain: teezrapp.com
   options: *default_options
+  database: *default_db
 regions: &default_regions
   us-west-2:
     <<: *default_attrs
